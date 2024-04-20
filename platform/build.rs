@@ -1,7 +1,6 @@
 use std::{env, path::Path, process::Command};
 
 fn main() {
-
     // Rebuild if app.roc changes
     println!("cargo:rerun-if-changed=../app.roc");
 
@@ -20,8 +19,9 @@ fn main() {
 
     // Package static library into an archive
     match Command::new("ar")
-    .args(&["rcs","libapp.a", "../app.o"])
-    .status() {
+        .args(&["rcs", "libapp.a", "../app.o"])
+        .status()
+    {
         Ok(status) if status.success() => {
             eprintln!("Successfully packaged app into an archive");
         }
@@ -33,7 +33,7 @@ fn main() {
     // Search for archive in current directory
     let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     println!("cargo:rustc-link-search={}", Path::new(&dir).display());
-    
+
     // Link against the archive
     println!("cargo:rustc-link-lib=static=app");
 }

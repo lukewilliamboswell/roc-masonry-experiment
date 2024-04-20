@@ -18,3 +18,5 @@ masonry = { git = "https://github.com/PoignardAzur/masonry-rs.git", rev = "0d4d5
 roc_std = {path = "src/glue/roc_std"}
 roc_app = {path = "src/glue/roc_app"}
 winit = "0.29.15"
+serde_json = "1.0"
+serde = "1.0.198"

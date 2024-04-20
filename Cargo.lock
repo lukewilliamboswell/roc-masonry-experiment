@@ -974,6 +974,8 @@ dependencies = [
  "masonry",
  "roc_app",
  "roc_std",
+ "serde",
+ "serde_json",
  "winit",
 ]
 

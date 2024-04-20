@@ -1,7 +1,9 @@
 use core::ffi::c_void;
-use roc_std::{RocList, RocStr};
+use roc_std::RocStr;
 use std::fmt::Debug;
 use std::mem::MaybeUninit;
+
+mod ui;
 
 #[no_mangle]
 pub unsafe extern "C" fn roc_alloc(size: usize, _alignment: u32) -> *mut c_void {
@@ -171,7 +173,7 @@ impl ProgramForHost {
         }
     }
 
-    pub fn render(&mut self) -> RocList<roc_app::Elem> {
+    pub fn render(&mut self) -> roc_std::RocList<u8> {
         extern "C" {
             fn roc__mainForHost_1_caller(
                 arg0: *const BoxedModel,
@@ -193,7 +195,7 @@ impl ProgramForHost {
 
             self.model = MaybeUninit::new(render_return.model);
 
-            render_return.elems
+            render_return.root
         }
     }
 }
@@ -201,6 +203,6 @@ impl ProgramForHost {
 #[repr(C)]
 #[derive(Debug)]
 pub struct RenderReturn {
-    pub elems: RocList<roc_app::Elem>,
     pub model: BoxedModel,
+    pub root: roc_std::RocList<u8>,
 }

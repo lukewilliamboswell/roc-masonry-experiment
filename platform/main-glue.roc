@@ -10,7 +10,6 @@ platform "glue-workaround"
 GlueStuff : {
     a : List Bounds,
     b : List Event,
-    c : List Elem,
 }
 
 mainForHost : GlueStuff

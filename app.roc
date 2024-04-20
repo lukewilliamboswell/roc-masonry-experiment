@@ -1,6 +1,9 @@
 app "hello"
-    packages { pf: "platform/main.roc" }
-    imports [pf.Types.{ Bounds, Elem, Event }]
+    packages { 
+        pf: "platform/main.roc",
+        json: "https://github.com/lukewilliamboswell/roc-json/releases/download/0.7.0/xuaMzXRVG_SEhOFZucS3iBozlRdObWsfKaYZMHVE_q0.tar.br",
+     }
+    imports [pf.Types.{ Bounds, Elem, Event }, json.Core.{jsonWithOptions}]
     provides [program] { Model } to pf
 
 program = { init, update, render }
@@ -19,6 +22,17 @@ update = \model, event ->
         KeyUp _ -> { model & text: "KeyUp" }
         Tick _ -> model
 
-render : Model -> List Elem
+render : Model -> List U8
 render = \model ->
-    [Text { text: model.text, top: 0, left: 0, size: 40, color: { r: 1, g: 1, b: 1, a: 1 } }]
+    root = FlexCol [
+        Label {text: "Foo"},
+        Label {text: model.text},
+        Label {text: "Bar"}
+    ]
+
+    encoder = jsonWithOptions {
+        fieldNameMapping: SnakeCase,
+    }
+
+    Encode.toBytes root encoder
+    
