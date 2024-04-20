@@ -1,9 +1,25 @@
 platform "masonry-experiment"
-    requires {} { main : _ }
+    requires { Model } { program : _ }
     exposes [Types]
     packages {}
-    imports []
+    imports [Types.{ Bounds, Elem, Event }]
     provides [mainForHost]
 
-mainForHost : Str
-mainForHost = main.title
+# We box the model before passing to the Host and unbox when passed to Roc
+ProgramForHost : {
+    init : Bounds -> Box Model,
+    update : Box Model, Event -> Box Model,
+    render : Box Model -> { elems : List Elem, model : Box Model },
+}
+
+init : Bounds -> Box Model
+init = \bounds -> Box.box (program.init bounds)
+
+update : Box Model, Event -> Box Model
+update = \boxedModel, event -> Box.box (program.update (Box.unbox boxedModel) event)
+
+render : Box Model -> { elems : List Elem, model : Box Model }
+render = \boxedModel -> { elems: program.render (Box.unbox boxedModel), model: boxedModel }
+
+mainForHost : ProgramForHost
+mainForHost = { init, update, render }

@@ -24,18 +24,27 @@ impl AppDriver for Driver {
 
 pub fn main() {
 
-    let title: roc_std::RocStr = host::main_for_host();
+    let mut roc_program: host::ProgramForHost = host::program_for_host();
+
+    roc_program.init(roc_app::Bounds { height: 10.0, width: 20.0 });
+
+    let elems = roc_program.render();
+
+    dbg!(elems);
+
+    // let title: roc_std::RocStr = host::main_for_host();
 
     let event_loop = EventLoop::new().unwrap();
     let window_size = LogicalSize::new(400.0, 400.0);
     let window = WindowBuilder::new()
-        .with_title(title.as_str())
+        .with_title("title.as_str()")
         .with_resizable(true)
         .with_min_inner_size(window_size)
         .build(&event_loop)
         .unwrap();
 
     let runner = EventLoopRunner::new(build_root_widget(), window, event_loop, Driver);
+    
     runner.run().unwrap();
 }
 

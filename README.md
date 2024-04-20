@@ -11,8 +11,10 @@ An experiment to integrate [roc-lang](https://github.com/roc-lang/roc) and [maso
 
 Note we use the `RustGlue.roc` spec from a parent directory here, you can copy this from [roc-lang/roc](https://github.com/roc-lang/roc/tree/main/crates/glue/src) instead of cloning the whole repository.
 
+Note we use `platform/main-glue.roc` here as glue generation is a WIP and doesn't work correctly for the platform.
+
 ```
-$ roc glue ../roc/crates/glue/src/RustGlue.roc platform/src/glue platform/main.roc
+$ roc glue ../roc/crates/glue/src/RustGlue.roc platform/src/glue platform/main-glue.roc
 🎉 Generated type declarations in:
 
 	platform/src/glue
