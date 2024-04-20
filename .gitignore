@@ -1,0 +1,5 @@
+target/
+platform/src/glue/
+
+*.o
+*.a

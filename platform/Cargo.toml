@@ -1,0 +1,20 @@
+[package]
+name = "host"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "host"
+path = "src/lib.rs"
+crate-type = ["staticlib", "lib"]
+
+[[bin]]
+name = "host"
+path = "src/main.rs"
+
+[dependencies]
+libc = "0.2"
+masonry = { git = "https://github.com/PoignardAzur/masonry-rs.git", rev = "0d4d55d" }
+roc_std = {path = "src/glue/roc_std"}
+roc_app = {path = "src/glue/roc_app"}
+winit = "0.29.15"
